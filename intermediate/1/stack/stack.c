@@ -3,97 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaleman <jaleman@student.42.us.org>        +#+  +:+       +#+        */
+/*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/23 00:53:44 by jaleman           #+#    #+#             */
-/*   Updated: 2018/10/23 00:53:44 by jaleman          ###   ########.fr       */
+/*   Created: 2019/05/15 15:04:50 by cbrill            #+#    #+#             */
+/*   Updated: 2019/05/15 15:08:50 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-struct              s_node
-{
-    void            *content;
-    struct s_node   *next;
-};
-struct              s_stack
-{
-    struct s_node   *top;
-};
+typedef struct		s_node {
+	void			*content;
+	struct s_node	*next;
+} node;
 
-struct s_stack      *init(void)
-{
-    struct s_stack  *stack = malloc(sizeof(stack));
+typedef struct		s_stack {
+	struct s_node	*top;
+} stack;
 
-    stack->top = NULL;
-    return (stack);
+struct s_stack *init(void) {
+	stack *s;
+
+	if ((s = malloc(sizeof(stack))))
+		*s = (stack){NULL};
+	return (s);
 }
 
-void                *pop(struct s_stack *stack)
-{
-    void            *content = NULL;
-    struct s_node   *node = stack->top;
-
-    if (stack->top)
-    {
-      content = stack->top->content;
-      stack->top = node->next;
-      free(node);
-      node = NULL;
-    }
-    return (content);
+void *peek(struct s_stack *stack) {
+	return ((stack && stack->top)? stack->top->content : NULL);
 }
 
-void                push(struct s_stack *stack, void *content)
-{
-    struct s_node   *node = malloc(sizeof(node));
-    node->content = content;
-    node->next = stack->top;
-    stack->top = node;
-    free(node);
-    node = NULL;
-    return ;
+int isEmpty(struct s_stack *stack) {
+	return (stack && !stack->top);
 }
 
-void                *peek(struct s_stack *stack)
-{
-    return (stack->top ? stack->top->content : 0);
+void push(struct s_stack *stack, void *content) {
+	node *n;
+
+	if (stack && (n = malloc(sizeof(node)))) {
+		*n = (node){content, stack->top};
+		stack->top = n;
+	}
 }
 
-int                 isEmpty(struct s_stack *stack)
-{
-    return (!stack->top ? 1 : 0);
+void *pop(struct s_stack *stack) {
+	void *n;
+
+	if ((n = peek(stack)))
+		stack->top = stack->top->next;
+	return (n);
 }
 
 /*
-
 #include <stdio.h>
 
-int                 main(void)
-{
-    struct s_stack  *stack = init();
-    char            *content[][1] = {
-      "Uno",
-      "Dos",
-      "Tres",
-      "Cuatro",
-      "Cinco"
-    };
+static void pprint(stack *s) {
+	node *n = s->top;
 
-    for (int i = 0; i < 5; i += 1)
-    {
-        push(stack, *content[i]);
-        printf("Content : %s\n", peek(stack));
-        printf("Empty   : %s\n", (isEmpty(stack) ? "yes" : "no"));
-    }
-    for (int i = 5; i > 0; i -= 1)
-    {
-        pop(stack);
-        printf("Content : %s\n", peek(stack));
-        printf("Empty   : %s\n", (isEmpty(stack) ? "yes" : "no"));
-    }
-    return (0);
+	printf("%s", "[ ");
+	while (n) {
+		printf("%s%s", n->content, n->next? " " : "");
+		n = n->next;
+	}
+	printf("%s", " ] \n");
 }
 
+int main(void) {
+	char *words[] = {"here\'s", "a", "list", "of", "words.", 0};
+	stack *s = init();
+	int i = 0;
+	printf("Empty? %s\n", isEmpty(s)? "Y" : "N");
+	printf("Peek: <%s>\n", peek(s));
+	while (words[i])
+		push(s, words[i++]);
+	pprint(s);
+	printf("Pop: <%s>\n", pop(s));
+	pprint(s);
+	printf("Peek: <%s>\n", peek(s));
+	return (0);
+}
 */
