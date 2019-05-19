@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/15 15:04:50 by cbrill            #+#    #+#             */
-/*   Updated: 2019/05/15 15:08:50 by cbrill           ###   ########.fr       */
+/*   Updated: 2019/05/19 15:59:24 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,39 +47,47 @@ void push(struct s_stack *stack, void *content) {
 }
 
 void *pop(struct s_stack *stack) {
-	void *n;
+	void *c = NULL;
+	node *t;
 
-	if ((n = peek(stack)))
-		stack->top = stack->top->next;
-	return (n);
+	if (stack && (t = stack->top)) {
+		c = t->content;
+		stack->top = t->next;
+		free(t);
+	}
+	return (c);
 }
+
 
 /*
 #include <stdio.h>
 
 static void pprint(stack *s) {
-	node *n = s->top;
+	node *n = &(node){NULL, s->top};
 
 	printf("%s", "[ ");
-	while (n) {
+	while ((n = n->next))
 		printf("%s%s", n->content, n->next? " " : "");
-		n = n->next;
-	}
-	printf("%s", " ] \n");
+	printf("%s", " ]\n");
 }
 
 int main(void) {
 	char *words[] = {"here\'s", "a", "list", "of", "words.", 0};
 	stack *s = init();
 	int i = 0;
+
+	pprint(s);
 	printf("Empty? %s\n", isEmpty(s)? "Y" : "N");
+	printf("Pop: <%s>\n", pop(s));
 	printf("Peek: <%s>\n", peek(s));
 	while (words[i])
 		push(s, words[i++]);
 	pprint(s);
+	printf("Empty? %s\n", isEmpty(s)? "Y" : "N");
 	printf("Pop: <%s>\n", pop(s));
-	pprint(s);
 	printf("Peek: <%s>\n", peek(s));
+	while (!isEmpty(s))
+		pop(s);
 	return (0);
 }
 */
