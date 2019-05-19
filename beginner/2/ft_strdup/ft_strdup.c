@@ -6,7 +6,7 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 16:21:18 by cbrill            #+#    #+#             */
-/*   Updated: 2019/05/13 00:41:35 by cbrill           ###   ########.fr       */
+/*   Updated: 2019/05/19 16:15:50 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ char	*ft_strdup(char *src)
 	return (s);
 }
 
-// #include <stdio.h>
-// int main(void) {
-// 	char *str = "dup this";
-// 	char *copy = ft_strdup(str);
-// 	printf("%s\n", copy);
-// 	free(copy);
-// 	return (0);
-// }
+/*
+#include <stdio.h>
+int main(void) {
+	char *str = "dup this";
+	char *copy = ft_strdup(str);
+
+	printf("%s\n", copy);
+	free(copy);
+	return (0);
+}
+/*

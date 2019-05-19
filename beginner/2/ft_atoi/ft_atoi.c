@@ -6,11 +6,9 @@
 /*   By: cbrill <cbrill@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/12 16:20:59 by cbrill            #+#    #+#             */
-/*   Updated: 2019/05/12 23:57:14 by cbrill           ###   ########.fr       */
+/*   Updated: 2019/05/19 16:17:44 by cbrill           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdio.h>
 
 int	ft_atoi(char *s)
 {
@@ -28,9 +26,12 @@ int	ft_atoi(char *s)
 	return (sign * (int)r);
 }
 
-// int	main(void)
-// {
-// 	char *a = "    \n\n\v\f\r\t -5234AAAgreghrsth"; // -5234
+/*
+#include <stdio.h>
+int	main(void)
+{
+	char *a = " \t\n\r\f\v-6969alpha"; // -6969
 	
-// 	printf("%d\n", ft_atoi(a));
-// }
+	printf("%d\n", ft_atoi(a));
+}
+*/
